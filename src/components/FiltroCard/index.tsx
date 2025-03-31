@@ -1,19 +1,23 @@
+// Importação de todos os estilos criados em index.ts
 import { useDispatch, useSelector } from 'react-redux'
 import { alterarFiltro } from '../../store/reducers/filtro'
 import * as S from './styles'
 import * as enums from '../../utils/enums/Tarefa'
 import { RootReducer } from '../../store'
 
+//Configuração das props deste arquivo.
 export type Props = {
   legenda: string
   criterio: 'prioridade' | 'status' | 'todas'
   valor?: enums.Prioridade | enums.Status
 }
 
+// Configuração dos cards para o filtro lateral.
 const FiltroCard = ({ legenda, criterio, valor }: Props) => {
   const dispatch = useDispatch()
   const { filtro, tarefas } = useSelector((state: RootReducer) => state)
 
+  //verificação de qual card filtro está ativo
   const verificaEstaAtivo = () => {
     const mesmoCriterio = filtro.criterio === criterio
     const mesmoValor = filtro.valor === valor
@@ -21,6 +25,7 @@ const FiltroCard = ({ legenda, criterio, valor }: Props) => {
     return mesmoCriterio && mesmoValor
   }
 
+  //Função para fazer a contagem de tarefas de cada card
   const contarTarefas = () => {
     if (criterio === 'todas') return tarefas.itens.length
     if (criterio === 'prioridade') {
